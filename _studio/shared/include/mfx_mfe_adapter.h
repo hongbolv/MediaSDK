@@ -27,10 +27,9 @@
 #include <map>
 #include <list>
 #include <vector>
-#include "vm_mutex.h"
-#include "vm_cond.h"
 #include "vm_time.h"
 #include <mfxstructures.h>
+#include <condition_variable>
 
 class MFEVAAPIEncoder
 {
@@ -98,8 +97,8 @@ private:
     mfxStatus   reconfigureRestorationCounts(VAContextID newCtx);
     mfxU32      m_refCounter;
 
-    vm_cond     m_mfe_wait;
-    vm_mutex    m_mfe_guard;
+    std::condition_variable     m_mfe_wait;
+    std::mutex                  m_mfe_guard;
 
     VADisplay      m_vaDisplay;
     VAMFContextID  m_mfe_context;
